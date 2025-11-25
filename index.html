@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musa Abu Hadeed | Position Portfolio</title>
+    <!-- React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Darker background for code vibe */
+            color: #e2e8f0;
+            overflow-x: hidden;
+            /* Custom Vintage Cursor (Default Arrow) */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="2"><path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.8c.45 0 .67-.54.35-.85L6.35 2.36a.5.5 0 0 0-.85.85z"/></svg>') 0 0, auto;
+        }
+
+        /* Custom Vintage Pointer (Hand) for clickable elements */
+        a, button, .card-hover, .cursor-pointer {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="2"><path d="M14.08 13.92a2 2 0 0 0-2.16-1.88 2 2 0 0 0-1.84 2.16V9.6a2 2 0 0 0-2.16-1.88 2 2 0 0 0-1.84 2.16V4.8a2 2 0 0 0-2.16-1.88 2 2 0 0 0-1.84 2.16v10.52a6 6 0 0 0 6.28 6.28h.24a6 6 0 0 0 6.28-6.28v-3.2a2 2 0 0 0-2.16-1.88 2 2 0 0 0-1.84 2.16z"/><path d="M7 12h.01"/></svg>') 10 2, pointer;
+        }
+
+        .font-code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* Magic Background Animation */
+        .magic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Behind everything */
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.9) 0%, #0f172a 100%);
+        }
+
+        .cmd-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.15;
+            font-family: 'Fira Code', monospace;
+            color: #22c55e; /* Matrix Green */
+            overflow: hidden;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.2); /* Neon glow */
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        /* Animated gradient text */
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradient 5s linear infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Sand Timer Text Effect */
+        .sand-timer-text {
+            background: linear-gradient(to bottom, #e2e8f0 50%, #fbbf24 50%);
+            background-size: 100% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: sand-fill 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes sand-fill {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
+        }
+
+        /* Falling Letters Animation */
+        @keyframes fall {
+            0% { transform: translateY(-50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .falling-char {
+            display: inline-block;
+            animation: fall 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0; /* Start invisible */
+        }
+
+        /* Typewriter Cursor */
+        .typewriter::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        /* Adjusted badge colors for dark mode */
+        .badge-blue { background-color: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.4); }
+        .badge-purple { background-color: rgba(147, 51, 234, 0.2); color: #d8b4fe; border: 1px solid rgba(147, 51, 234, 0.4); }
+        .badge-rose { background-color: rgba(225, 29, 72, 0.2); color: #fda4af; border: 1px solid rgba(225, 29, 72, 0.4); }
+        .badge-green { background-color: rgba(22, 163, 74, 0.2); color: #86efac; border: 1px solid rgba(22, 163, 74, 0.4); }
+        .badge-amber { background-color: rgba(217, 119, 6, 0.2); color: #fcd34d; border: 1px solid rgba(217, 119, 6, 0.4); }
+        
+        .link-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #818cf8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 1rem;
+            transition: all 0.2s;
+            font-family: 'Fira Code', monospace;
+        }
+        .link-button:hover {
+            color: #a5b4fc;
+            text-shadow: 0 0 8px rgba(129, 140, 248, 0.5);
+            transform: translateX(4px);
+        }
+
+        /* Particle Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Between code rain and content */
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+
+        // --- ICONS ---
+        const Icons = {
+            Star: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+            Code: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+            BookOpen: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+            Cpu: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>,
+            MousePointer: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="M13 13l6 6"/></svg>,
+            ShieldAlert: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>,
+            Sparkles: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 5H5"/><path d="M19 19v4"/><path d="M15 21h4"/></svg>,
+            Zap: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+            Link: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>,
+            Compass: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>,
+            Clock: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+            ExternalLink: ({ size = 16, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>,
+            User: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+            Briefcase: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>,
+            GraduationCap: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+            Quote: ({ size = 20, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z" /></svg>
+        };
+
+        const Icon = ({ icon, size = 20, className = "" }) => {
+            const IconComponent = Icons[icon];
+            return IconComponent ? <IconComponent size={size} className={className} /> : null;
+        };
+
+        // --- NEW VISUALIZATION COMPONENTS ---
+
+        // 0. Particle Field
+        const ParticleField = () => {
+            const canvasRef = useRef(null);
+
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let animationFrameId;
+                let particles = [];
+
+                const resize = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+
+                const createParticles = () => {
+                    particles = [];
+                    const count = window.innerWidth < 768 ? 30 : 80; // Less particles on mobile
+                    for (let i = 0; i < count; i++) {
+                        particles.push({
+                            x: Math.random() * canvas.width,
+                            y: Math.random() * canvas.height,
+                            size: Math.random() * 2 + 0.5,
+                            vx: (Math.random() - 0.5) * 0.5,
+                            vy: (Math.random() - 0.5) * 0.5,
+                            opacity: Math.random() * 0.5 + 0.1
+                        });
+                    }
+                };
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    particles.forEach(p => {
+                        p.x += p.vx;
+                        p.y += p.vy;
+
+                        // Wrap around screen
+                        if (p.x < 0) p.x = canvas.width;
+                        if (p.x > canvas.width) p.x = 0;
+                        if (p.y < 0) p.y = canvas.height;
+                        if (p.y > canvas.height) p.y = 0;
+
+                        ctx.fillStyle = `rgba(129, 140, 248, ${p.opacity})`; // Indigoish
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+
+                    animationFrameId = requestAnimationFrame(animate);
+                };
+
+                window.addEventListener('resize', resize);
+                resize();
+                createParticles();
+                animate();
+
+                return () => {
+                    window.removeEventListener('resize', resize);
+                    cancelAnimationFrame(animationFrameId);
+                };
+            }, []);
+
+            return <canvas ref={canvasRef} id="particle-canvas" />;
+        };
+
+        // 0. Typewriter Text Component (Replaces DroppingText)
+        const TypewriterText = () => {
+            const sentences = [
+                "The Architect",
+                "My Co-Pilot",
+                "A Force Multiplier",
+                "A Creative Partner"
+            ];
+            const [text, setText] = useState('');
+            const [isDeleting, setIsDeleting] = useState(false);
+            const [loopNum, setLoopNum] = useState(0);
+            const [typingSpeed, setTypingSpeed] = useState(150);
+
+            useEffect(() => {
+                const handleTyping = () => {
+                    const i = loopNum % sentences.length;
+                    const fullText = sentences[i];
+
+                    setText(isDeleting 
+                        ? fullText.substring(0, text.length - 1) 
+                        : fullText.substring(0, text.length + 1)
+                    );
+
+                    setTypingSpeed(isDeleting ? 50 : 150);
+
+                    if (!isDeleting && text === fullText) {
+                        setTimeout(() => setIsDeleting(true), 2000); // Wait before deleting
+                    } else if (isDeleting && text === '') {
+                        setIsDeleting(false);
+                        setLoopNum(loopNum + 1);
+                    }
+                };
+
+                const timer = setTimeout(handleTyping, typingSpeed);
+                return () => clearTimeout(timer);
+            }, [text, isDeleting, loopNum, typingSpeed, sentences]);
+
+            return (
+                <span className="text-indigo-400 typewriter">{text}</span>
+            );
+        };
+
+        // 0. CMD Background Effect
+        const CodeRain = () => {
+            const [lines, setLines] = useState([]);
+            
+            useEffect(() => {
+                const codeSnippets = [
+                    "const hero = new Director();",
+                    "hero.vision = 'Create Magic';",
+                    "if (ai.status === 'ready') {",
+                    "  hero.collaborate(ai);",
+                    "}",
+                    "// Importing creativity...",
+                    "import { Soul } from './human';",
+                    "import { Logic } from './machine';",
+                    "const portfolio = new Portfolio();",
+                    "portfolio.render();",
+                    "await ai.generate('solution');",
+                    "console.log('Vibe Coding initialized...');",
+                    "function buildFuture() {",
+                    "  return human + ai;",
+                    "}",
+                    "git commit -m 'Update perspective'",
+                    "npm install innovation",
+                    "while(true) { learn(); }",
+                    "> System.out.println('Hello World');",
+                    "Error: Limits not found.",
+                    "Compiling assets...",
+                    "Deploying to production...",
+                    "Connection established.",
+                    "Accessing neural network...",
+                    "Optimizing creative flow...",
+                    "404: Boredom not found"
+                ];
+
+                const interval = setInterval(() => {
+                    setLines(prev => {
+                        const newLine = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+                        const updated = [...prev, `> ${newLine}`];
+                        if (updated.length > 25) updated.shift(); // Keep screen clean
+                        return updated;
+                    });
+                }, 800); // Speed of typing
+
+                return () => clearInterval(interval);
+            }, []);
+
+            return (
+                <div className="cmd-overlay hidden md:block"> {/* Hide on small mobile to save space/perf */}
+                    {lines.map((line, i) => (
+                        <div key={i} className="typewriter-line">{line}</div>
+                    ))}
+                    <div className="animate-pulse">_</div>
+                </div>
+            );
+        };
+
+        // 1. Digital Storytelling Component for Week 1 (Compass Edition)
+        const DigitalStory = () => {
+            const [scene, setScene] = useState(0); // 0: Start, 1-6: Story, 7: End
+            const [isSpinning, setIsSpinning] = useState(false);
+            const [needleRotation, setNeedleRotation] = useState(0);
+            
+            const storyScenes = [
+                {
+                    color: "bg-slate-900",
+                    textColor: "text-slate-300",
+                    icon: "ShieldAlert",
+                    title: "The City of Glass",
+                    text: "Elara felt like she was made of glass, and the noise of the city was about to shatter her. Every day was the same: screens, traffic, and the low hum of too many people.",
+                    angle: 0
+                },
+                {
+                    color: "bg-cyan-900",
+                    textColor: "text-cyan-100",
+                    icon: "Compass",
+                    title: "The Discovery",
+                    text: "One afternoon, tucked into a crack in a brick wall, she found a small wooden box. Inside was a strange compass. The needle wasn't metal; it looked like glowing blue-green sea glass.",
+                    angle: 60
+                },
+                {
+                    color: "bg-emerald-900",
+                    textColor: "text-emerald-100",
+                    icon: "Compass",
+                    title: "The Guide",
+                    text: "She felt silly, but she let the glowing needle guide her. It pulled her left, then right, past dusty windows. With every turn, the city sounds got quieter.",
+                    angle: 120
+                },
+                {
+                    color: "bg-stone-800",
+                    textColor: "text-stone-200",
+                    icon: "Link",
+                    title: "The Door",
+                    text: "The needle stopped, pointing at a tall, ivy-covered wooden door. It looked like it hadn't been opened in a hundred years. There was no handle, but when she gently pushed, it swung open.",
+                    angle: 180
+                },
+                {
+                    color: "bg-green-900",
+                    textColor: "text-green-100",
+                    icon: "Sparkles",
+                    title: "The Hidden Garden",
+                    text: "Inside wasn't a building. It was a hidden garden. A single, enormous tree grew in the center. Glowing mosses dotted the ground. It was completely silent, except for her own breathing.",
+                    angle: 240
+                },
+                {
+                    color: "bg-indigo-950",
+                    textColor: "text-indigo-100",
+                    icon: "Star",
+                    title: "Solid Ground",
+                    text: "Elara sat at the base of the tree. The compass gave one last soft pulse and went still. She finally felt like she was made of something solid again. She had found a place where she couldn't shatter.",
+                    angle: 360
+                }
+            ];
+
+            const handleNext = () => {
+                if (isSpinning) return;
+                
+                if (scene === storyScenes.length + 1) {
+                    setScene(0);
+                    setNeedleRotation(0);
+                    return;
+                }
+
+                if (scene === 0) {
+                    setScene(1);
+                    return;
+                }
+
+                setIsSpinning(true);
+                const nextStoryIndex = scene; 
+                
+                if (nextStoryIndex >= storyScenes.length) {
+                     const newRotation = needleRotation + 720;
+                     setNeedleRotation(newRotation);
+                     setTimeout(() => {
+                        setScene(scene + 1);
+                        setIsSpinning(false);
+                    }, 1500);
+                    return;
+                }
+
+                const currentAngle = storyScenes[scene - 1].angle;
+                const nextAngle = storyScenes[nextStoryIndex].angle;
+                
+                let diff = nextAngle - (needleRotation % 360);
+                if (diff <= 0) diff += 360;
+                const newRotation = needleRotation + 720 + diff;
+                
+                setNeedleRotation(newRotation);
+
+                setTimeout(() => {
+                    setScene(scene + 1);
+                    setIsSpinning(false);
+                }, 1500);
+            };
+
+            let content;
+            let containerClass = "bg-slate-900";
+
+            if (scene === 0) {
+                content = (
+                    <div className="flex flex-col items-center justify-center h-full text-center p-8 md:p-12 animate-fade-in">
+                        <div className="mb-8 p-6 rounded-full bg-amber-500/20 text-amber-400 animate-pulse">
+                            <Icon icon="Compass" size={64} />
+                        </div>
+                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-4 font-serif">The Compass & The Garden</h3>
+                        <p className="text-slate-400 max-w-md mb-12 text-sm md:text-base">An interactive digital story about finding quiet in a noisy world.</p>
+                        <button 
+                            onClick={handleNext}
+                            className="px-8 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-full transition-all transform hover:scale-105 shadow-lg flex items-center gap-2 font-code"
+                        >
+                            Begin Journey <Icon icon="ExternalLink" size={18} />
+                        </button>
+                    </div>
+                );
+            } else if (scene === storyScenes.length + 1) {
+                containerClass = "bg-indigo-950";
+                content = (
+                    <div className="flex flex-col items-center justify-center h-full text-center p-12 animate-fade-in">
+                        <div className="mb-6 text-emerald-400">
+                            <Icon icon="Sparkles" size={64} />
+                        </div>
+                        <h3 className="text-3xl font-bold text-white mb-4 font-serif">The End</h3>
+                        <p className="text-indigo-200 max-w-md mb-12">Thank you for experiencing this journey.</p>
+                        <button 
+                            onClick={handleNext}
+                            className="px-8 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full transition-all border border-white/20 flex items-center gap-2 backdrop-blur-md font-code"
+                        >
+                            <Icon icon="Clock" size={18} /> Read Again
+                        </button>
+                    </div>
+                );
+            } else {
+                const currentScene = storyScenes[scene - 1];
+                containerClass = currentScene.color;
+                content = (
+                    <>
+                        <div className={`flex-1 p-8 md:p-12 flex flex-col items-center justify-center text-center transition-all duration-500 transform ${isSpinning ? 'opacity-50 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
+                            <div className={`mb-8 inline-flex p-6 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl ${currentScene.textColor}`}>
+                                <Icon icon={currentScene.icon} size={48} />
+                            </div>
+                            <h3 className={`text-2xl md:text-4xl font-bold mb-6 ${currentScene.textColor} font-serif tracking-wide`}>{currentScene.title}</h3>
+                            <p className={`text-base md:text-xl leading-relaxed ${currentScene.textColor} font-light max-w-2xl`}>
+                                {currentScene.text}
+                            </p>
+                        </div>
+
+                        <div className="bg-black/30 backdrop-blur-md p-8 flex flex-col items-center justify-center border-t border-white/5">
+                            <button 
+                                onClick={handleNext}
+                                disabled={isSpinning}
+                                className="group relative flex flex-col items-center gap-4 focus:outline-none"
+                            >
+                                <div className="w-32 h-32 rounded-full bg-gradient-to-b from-slate-700 to-slate-900 border-[6px] border-slate-600 shadow-[0_0_50px_rgba(99,102,241,0.3)] relative flex items-center justify-center overflow-hidden transition-transform duration-300 group-active:scale-95 group-hover:border-indigo-500">
+                                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent rounded-full pointer-events-none"></div>
+                                    <div className="absolute top-2 text-[10px] font-bold text-slate-400 font-code">N</div>
+                                    <div className="absolute bottom-2 text-[10px] font-bold text-slate-400 font-code">S</div>
+                                    <div className="absolute left-2 text-[10px] font-bold text-slate-400 font-code">W</div>
+                                    <div className="absolute right-2 text-[10px] font-bold text-slate-400 font-code">E</div>
+
+                                    <div 
+                                        className="w-full h-full absolute transition-transform duration-[1500ms] cubic-bezier(0.34, 1.56, 0.64, 1)"
+                                        style={{ transform: `rotate(${needleRotation}deg)` }}
+                                    >
+                                        <div className="w-4 h-24 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                            <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[50px] border-b-red-500 absolute bottom-1/2 left-1/2 -translate-x-1/2 drop-shadow-[0_0_10px_rgba(239,68,68,0.8)]"></div>
+                                            <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[50px] border-t-white absolute top-1/2 left-1/2 -translate-x-1/2 opacity-90"></div>
+                                            <div className="w-3 h-3 bg-slate-200 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-sm z-10"></div>
+                                        </div>
+                                    </div>
+                                    <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/10 to-transparent opacity-50 pointer-events-none"></div>
+                                </div>
+                                <div className="text-white/70 text-sm font-medium tracking-widest uppercase group-hover:text-white transition-colors font-code">
+                                    {isSpinning ? "Seeking..." : "Tap Compass"}
+                                </div>
+                            </button>
+                        </div>
+                    </>
+                );
+            }
+
+            return (
+                <div className={`w-full rounded-3xl overflow-hidden transition-all duration-1000 ${containerClass} shadow-2xl border border-white/10 relative min-h-[500px] md:min-h-[600px] flex flex-col`}>
+                    {content}
+                </div>
+            );
+        };
+
+        // 2. Logic Flow Visualization for Week 2 (Automation)
+        const LogicFlow = () => {
+            return (
+                <div className="w-full bg-slate-800/50 rounded-lg p-4 flex flex-col items-center gap-2 border border-slate-700">
+                    <div className="flex flex-col items-center animate-pulse">
+                        <div className="w-32 bg-slate-900 border border-slate-600 rounded shadow-sm p-2 text-center text-xs font-bold text-slate-300 font-code">
+                            📧 Fetch Emails
+                        </div>
+                        <div className="h-4 w-0.5 bg-slate-600"></div>
+                        <div className="w-32 bg-slate-900 border border-slate-600 rounded shadow-sm p-2 text-center text-xs font-bold text-slate-300 font-code">
+                            🔍 Filter Urgent
+                        </div>
+                         <div className="h-4 w-0.5 bg-slate-600"></div>
+                        <div className="w-32 bg-blue-900/50 border border-blue-700 rounded shadow-sm p-2 text-center text-xs font-bold text-blue-300 font-code">
+                            📝 AI Summary
+                        </div>
+                        <div className="h-4 w-0.5 bg-slate-600"></div>
+                         <div className="w-32 bg-green-900/50 border border-green-700 rounded shadow-sm p-2 text-center text-xs font-bold text-green-300 font-code">
+                            ✅ Add To-Do
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // 3. Scatterplot for Week 4 (Weather)
+        const ScatterPlot = () => {
+            const dataPoints = useMemo(() => {
+                return Array.from({ length: 50 }, () => {
+                    const temp = 20 + Math.random() * 70; 
+                    const pm25 = (temp * 0.5) + (Math.random() * 20 - 10); 
+                    return { x: temp, y: Math.max(0, pm25) };
+                });
+            }, []);
+
+            return (
+                <div className="w-full h-64 bg-slate-900 border border-slate-700 rounded-lg relative overflow-hidden p-4">
+                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                        <span className="text-6xl font-bold text-slate-700 font-code">DATA</span>
+                    </div>
+                    {/* Y-Axis Label */}
+                    <div className="absolute left-2 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] text-slate-400 font-bold tracking-widest font-code">
+                        PM 2.5 (Air Quality)
+                    </div>
+                     {/* X-Axis Label */}
+                     <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-slate-400 font-bold tracking-widest font-code">
+                        TEMPERATURE (°F)
+                    </div>
+
+                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                         {/* Grid Lines */}
+                        <line x1="10" y1="90" x2="95" y2="90" stroke="#475569" strokeWidth="0.5" />
+                        <line x1="10" y1="10" x2="10" y2="90" stroke="#475569" strokeWidth="0.5" />
+                        
+                        {/* Trend Line */}
+                        <line x1="10" y1="80" x2="90" y2="20" stroke="#ef4444" strokeWidth="1" strokeDasharray="4" opacity="0.6" />
+
+                        {/* Data Points */}
+                        {dataPoints.map((pt, i) => (
+                            <circle 
+                                key={i} 
+                                cx={10 + (pt.x / 100) * 80} 
+                                cy={90 - (pt.y / 60) * 80} 
+                                r="1.5" 
+                                fill="#3b82f6" 
+                                className="hover:r-3 transition-all duration-300"
+                            />
+                        ))}
+                    </svg>
+                </div>
+            );
+        };
+
+        // 4. Bar Graph for Week 6 (Data Analysis)
+        const BarGraph = () => {
+            const data = [65, 45, 80, 55, 70];
+            
+            return (
+                <div className="w-full h-64 bg-slate-900 border border-slate-700 rounded-lg relative overflow-hidden p-4 flex items-end gap-4 justify-center">
+                    {data.map((height, i) => (
+                        <div key={i} className="w-8 bg-indigo-600 rounded-t-md relative group transition-all duration-300 hover:bg-indigo-500" style={{ height: `${height}%` }}>
+                            <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity font-code">{height}%</div>
+                        </div>
+                    ))}
+                    <div className="absolute bottom-2 left-0 w-full h-[1px] bg-slate-600"></div>
+                </div>
+            );
+        };
+
+        // 5. Playable Kirby Game for Week 5
+        const PlayableKirbyGame = () => {
+            const canvasRef = React.useRef(null);
+            const [gameState, setGameState] = useState('START'); 
+            const [score, setScore] = useState(0);
+            const [power, setPower] = useState('NORMAL');
+
+            const GRAVITY = 0.5;
+            const JUMP_FORCE = -8;
+            const SPEED = 3;
+            
+            const gameRef = React.useRef({
+                player: { x: 50, y: 200, vx: 0, vy: 0, width: 20, height: 20, color: '#f472b6', facingRight: true, isGrounded: false },
+                keys: { left: false, right: false, up: false, space: false, x: false },
+                enemies: [{ x: 300, y: 200, width: 20, height: 20, type: 'FIRE', active: true }],
+                projectiles: [],
+                particles: [],
+                platforms: [
+                    { x: 0, y: 250, width: 600, height: 50 }, 
+                    { x: 200, y: 180, width: 100, height: 10 },
+                    { x: 400, y: 120, width: 100, height: 10 }
+                ]
+            });
+
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                let animationFrameId;
+
+                const handleKeyDown = (e) => {
+                    const k = gameRef.current.keys;
+                    if (e.code === 'ArrowLeft') k.left = true;
+                    if (e.code === 'ArrowRight') k.right = true;
+                    if (e.code === 'ArrowUp') k.up = true;
+                    if (e.code === 'Space') k.space = true;
+                    if (e.key === 'x' || e.key === 'X') k.x = true;
+                };
+
+                const handleKeyUp = (e) => {
+                    const k = gameRef.current.keys;
+                    if (e.code === 'ArrowLeft') k.left = false;
+                    if (e.code === 'ArrowRight') k.right = false;
+                    if (e.code === 'ArrowUp') k.up = false;
+                    if (e.code === 'Space') k.space = false;
+                    if (e.key === 'x' || e.key === 'X') k.x = false;
+                };
+
+                window.addEventListener('keydown', handleKeyDown);
+                window.addEventListener('keyup', handleKeyUp);
+
+                const update = () => {
+                    if (gameState !== 'PLAYING') return;
+
+                    const state = gameRef.current;
+                    const p = state.player;
+
+                    if (state.keys.left) { p.vx = -SPEED; p.facingRight = false; }
+                    if (state.keys.right) { p.vx = SPEED; p.facingRight = true; }
+                    if (!state.keys.left && !state.keys.right) p.vx = 0;
+
+                    if (state.keys.up && p.isGrounded) {
+                        p.vy = JUMP_FORCE;
+                        p.isGrounded = false;
+                    }
+
+                    p.vy += GRAVITY;
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    p.isGrounded = false;
+                    state.platforms.forEach(plat => {
+                        if (p.x < plat.x + plat.width &&
+                            p.x + p.width > plat.x &&
+                            p.y + p.height > plat.y &&
+                            p.y + p.height < plat.y + p.height + 10 && 
+                            p.vy >= 0) {
+                                p.y = plat.y - p.height;
+                                p.vy = 0;
+                                p.isGrounded = true;
+                        }
+                    });
+
+                    if (p.x < 0) p.x = 0;
+                    if (p.x > canvas.width - p.width) p.x = canvas.width - p.width;
+                    if (p.y > canvas.height) {
+                        p.x = 50; p.y = 200; p.vy = 0;
+                    }
+
+                    if (state.keys.space && power === 'NORMAL') {
+                        state.enemies.forEach((enemy, idx) => {
+                            if (!enemy.active) return;
+                            const dx = enemy.x - p.x;
+                            const dy = enemy.y - p.y;
+                            const dist = Math.sqrt(dx*dx + dy*dy);
+                            
+                            if (dist < 50 && ((p.facingRight && dx > 0) || (!p.facingRight && dx < 0))) {
+                                enemy.x += (p.x - enemy.x) * 0.1;
+                                enemy.y += (p.y - enemy.y) * 0.1;
+                                
+                                if (dist < 10) {
+                                    enemy.active = false;
+                                    setPower('FIRE');
+                                    setScore(s => s + 100);
+                                    for(let i=0; i<10; i++) state.particles.push({x: p.x, y: p.y, vx: (Math.random()-0.5)*5, vy: (Math.random()-0.5)*5, life: 20, color: '#ef4444'});
+                                }
+                            }
+                        });
+                    }
+
+                    if (state.keys.x && power === 'FIRE') {
+                        if (Math.random() > 0.8) { 
+                             state.projectiles.push({
+                                x: p.x + (p.facingRight ? 20 : -10),
+                                y: p.y + 5,
+                                vx: p.facingRight ? 6 : -6,
+                                life: 60
+                            });
+                        }
+                    }
+
+                    state.projectiles.forEach(proj => {
+                        proj.x += proj.vx;
+                        proj.life--;
+                    });
+                    state.projectiles = state.projectiles.filter(proj => proj.life > 0);
+
+                    state.particles.forEach(part => {
+                        part.x += part.vx;
+                        part.y += part.vy;
+                        part.life--;
+                    });
+                    state.particles = state.particles.filter(part => part.life > 0);
+
+                    if (state.enemies.every(e => !e.active)) {
+                        if (Math.random() > 0.99) {
+                             state.enemies.push({ 
+                                 x: Math.random() * 500 + 50, 
+                                 y: 0, 
+                                 width: 20, 
+                                 height: 20, 
+                                 type: 'FIRE', 
+                                 active: true 
+                            });
+                        }
+                    }
+                };
+
+                const draw = () => {
+                    ctx.fillStyle = '#0ea5e9'; 
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    const state = gameRef.current;
+                    
+                    ctx.fillStyle = '#22c55e';
+                    state.platforms.forEach(p => {
+                        ctx.fillRect(p.x, p.y, p.width, p.height);
+                        ctx.fillStyle = '#4ade80';
+                        ctx.fillRect(p.x, p.y, p.width, 5);
+                        ctx.fillStyle = '#22c55e';
+                    });
+
+                    state.enemies.forEach(e => {
+                        if (!e.active) return;
+                        ctx.fillStyle = '#ef4444';
+                        ctx.fillRect(e.x, e.y, e.width, e.height);
+                        ctx.fillStyle = 'black';
+                        ctx.fillRect(e.x + 4, e.y + 4, 4, 4);
+                        ctx.fillRect(e.x + 12, e.y + 4, 4, 4);
+                    });
+
+                    const p = state.player;
+                    ctx.fillStyle = power === 'FIRE' ? '#f87171' : '#f472b6'; 
+                    ctx.beginPath();
+                    ctx.arc(p.x + 10, p.y + 10, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = 'black';
+                    const eyeOffset = p.facingRight ? 4 : -4;
+                    ctx.fillRect(p.x + 10 + eyeOffset - 4, p.y + 6, 3, 6);
+                    ctx.fillRect(p.x + 10 + eyeOffset + 4, p.y + 6, 3, 6);
+                    if (state.keys.space) {
+                        ctx.beginPath();
+                        ctx.arc(p.x + 10 + (p.facingRight?5:-5), p.y + 14, 6, 0, Math.PI * 2);
+                        ctx.fillStyle = 'black';
+                        ctx.fill();
+                    }
+
+                    ctx.fillStyle = '#fbbf24';
+                    state.projectiles.forEach(proj => {
+                        ctx.beginPath();
+                        ctx.arc(proj.x, proj.y, 5, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+
+                    state.particles.forEach(part => {
+                        ctx.fillStyle = part.color;
+                        ctx.fillRect(part.x, part.y, 3, 3);
+                    });
+
+                    if (power === 'FIRE') {
+                        ctx.fillStyle = 'white';
+                        ctx.font = 'bold 12px "Fira Code"';
+                        ctx.fillText("POWER: FIRE (Press X to Shoot)", 10, 20);
+                    } else {
+                        ctx.fillStyle = 'white';
+                        ctx.font = 'bold 12px "Fira Code"';
+                        ctx.fillText("Hold SPACE to Inhale", 10, 20);
+                    }
+                };
+
+                const loop = () => {
+                    update();
+                    draw();
+                    animationFrameId = requestAnimationFrame(loop);
+                };
+                
+                if (gameState === 'PLAYING') {
+                    loop();
+                } else if (gameState === 'START') {
+                    ctx.fillStyle = '#0f172a';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 24px "Fira Code"';
+                    ctx.textAlign = 'center';
+                    ctx.fillText("KIRBY DEMO", canvas.width/2, canvas.height/2 - 20);
+                    ctx.font = '16px "Fira Code"';
+                    ctx.fillText("Arrows to Move/Jump", canvas.width/2, canvas.height/2 + 10);
+                    ctx.fillText("SPACE to Inhale Enemy", canvas.width/2, canvas.height/2 + 30);
+                    ctx.fillText("Click to Start", canvas.width/2, canvas.height/2 + 60);
+                }
+
+                return () => {
+                    window.removeEventListener('keydown', handleKeyDown);
+                    window.removeEventListener('keyup', handleKeyUp);
+                    cancelAnimationFrame(animationFrameId);
+                };
+            }, [gameState, power]);
+
+            return (
+                <div className="w-full flex flex-col items-center mb-4">
+                    <canvas 
+                        ref={canvasRef} 
+                        width={600} 
+                        height={300} 
+                        className="rounded-lg border-4 border-slate-700 shadow-lg bg-slate-800 cursor-pointer max-w-full"
+                        onClick={() => gameState === 'START' && setGameState('PLAYING')}
+                    />
+                    <div className="mt-2 flex gap-4 text-xs text-slate-500 font-code">
+                        <span className="bg-slate-800 border border-slate-700 px-2 py-1 rounded">⬅️➡️ Move</span>
+                        <span className="bg-slate-800 border border-slate-700 px-2 py-1 rounded">⬆️ Jump</span>
+                        <span className="bg-slate-800 border border-slate-700 px-2 py-1 rounded">SPACE Inhale</span>
+                        {power === 'FIRE' && <span className="bg-red-900/50 text-red-400 border border-red-800 px-2 py-1 rounded animate-pulse">X Shoot</span>}
+                    </div>
+                </div>
+            );
+        };
+
+        // 6. Mario Game Visual for Week 3
+        const MarioVisual = () => (
+            <div className="w-full h-48 bg-sky-300 rounded-lg border-4 border-slate-700 relative overflow-hidden mb-4">
+                {/* Clouds */}
+                <div className="absolute top-4 left-10 w-12 h-6 bg-white rounded-full opacity-80"></div>
+                <div className="absolute top-8 right-20 w-16 h-8 bg-white rounded-full opacity-80"></div>
+                
+                {/* Ground */}
+                <div className="absolute bottom-0 w-full h-8 bg-orange-700 border-t-4 border-black">
+                    <div className="w-full h-full pattern-dots"></div>
+                </div>
+
+                {/* Blocks */}
+                <div className="absolute bottom-24 left-1/4 flex gap-1">
+                    <div className="w-8 h-8 bg-orange-400 border-2 border-black text-black font-bold flex items-center justify-center font-code">?</div>
+                    <div className="w-8 h-8 bg-orange-600 border-2 border-black"></div>
+                    <div className="w-8 h-8 bg-orange-600 border-2 border-black"></div>
+                </div>
+
+                {/* Pipe */}
+                <div className="absolute bottom-8 right-12 w-12 h-16 bg-green-500 border-2 border-black flex flex-col items-center">
+                    <div className="w-14 h-6 bg-green-500 border-2 border-black -mt-2"></div>
+                </div>
+
+                {/* Mario Figure */}
+                <div className="absolute bottom-8 left-10 w-6 h-8 bg-red-500 border border-black">
+                    <div className="absolute -top-2 left-0 w-6 h-2 bg-red-600 rounded-t-sm"></div> {/* Hat */}
+                    <div className="absolute top-1 right-0 w-4 h-3 bg-amber-200"></div> {/* Face */}
+                    <div className="absolute bottom-0 w-full h-4 bg-blue-600"></div> {/* Overalls */}
+                </div>
+            </div>
+        );
+
+        // 7. Remixed Clock Visual for Week 3
+        const ClockVisual = () => (
+            <div className="w-full h-48 bg-slate-900 rounded-lg border-4 border-slate-700 relative overflow-hidden mb-4 flex items-center justify-center group">
+                {/* Dynamic Video Background (Gradient Animation) */}
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 opacity-80 animate-pulse"></div>
+                
+                {/* Overlay Pattern */}
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvc3ZnPg==')] opacity-30"></div>
+
+                {/* Digital Clock Display */}
+                <div className="relative z-10 bg-black/40 backdrop-blur-sm px-6 py-3 rounded-xl border border-white/20 shadow-2xl">
+                    <span className="text-4xl font-mono font-bold text-white tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] font-code">
+                        12:45
+                    </span>
+                </div>
+
+                {/* Music Visualization Bars */}
+                <div className="absolute bottom-4 right-4 flex gap-1 items-end h-8">
+                    <div className="w-1 bg-white/80 rounded-t animate-[bounce_1s_infinite]"></div>
+                    <div className="w-1 bg-white/80 rounded-t animate-[bounce_1.2s_infinite] h-6"></div>
+                    <div className="w-1 bg-white/80 rounded-t animate-[bounce_0.8s_infinite] h-4"></div>
+                    <div className="w-1 bg-white/80 rounded-t animate-[bounce_1.1s_infinite] h-7"></div>
+                </div>
+
+                {/* YouTube Icon Hint */}
+                <div className="absolute top-3 right-3 bg-red-600 text-white p-1 rounded shadow-lg">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+            </div>
+        );
+
+        // 8. Dashboard Visual for Week 6
+        const DashboardVisual = () => (
+            <div className="w-full bg-slate-800 rounded-xl border border-slate-700 overflow-hidden shadow-sm mb-6">
+                {/* Mock Header */}
+                <div className="bg-slate-900 p-3 flex justify-between items-center border-b border-slate-700">
+                    <div className="flex gap-2">
+                        <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    <div className="text-xs text-slate-400 font-code">Teacher PD Dashboard</div>
+                </div>
+                
+                {/* Mock Content */}
+                <div className="p-4 grid grid-cols-3 gap-4">
+                    {/* Sidebar */}
+                    <div className="col-span-1 space-y-2">
+                        <div className="h-8 w-8 bg-slate-700 rounded-full mb-4"></div>
+                        <div className="h-2 w-16 bg-slate-700 rounded"></div>
+                        <div className="h-2 w-12 bg-slate-700/50 rounded"></div>
+                        <div className="h-2 w-14 bg-slate-700/50 rounded"></div>
+                    </div>
+                    
+                    {/* Main Area */}
+                    <div className="col-span-2 space-y-3">
+                        {/* Progress Card */}
+                        <div className="bg-slate-700/30 p-3 rounded-lg border border-slate-600">
+                            <div className="flex justify-between mb-2">
+                                <div className="h-2 w-20 bg-slate-600 rounded"></div>
+                                <div className="text-[10px] text-green-400 font-bold font-code">75%</div>
+                            </div>
+                            <div className="h-1.5 w-full bg-slate-600 rounded-full overflow-hidden">
+                                <div className="h-full w-3/4 bg-green-500 rounded-full shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
+                            </div>
+                        </div>
+                        
+                        {/* Course List */}
+                        <div className="flex gap-2">
+                            <div className="h-16 flex-1 bg-slate-700/30 rounded border border-slate-600"></div>
+                            <div className="h-16 flex-1 bg-slate-700/30 rounded border border-slate-600"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        // 9. Student Sorter Visual for Week 2
+        const StudentSorterVisual = () => {
+            return (
+                <div className="w-full bg-slate-800 rounded-lg p-4 mb-4 border border-slate-700 relative overflow-hidden group">
+                    <div className="flex justify-between items-start mb-4">
+                        <div className="space-y-1">
+                            <div className="h-2 w-20 bg-slate-600 rounded animate-pulse"></div>
+                            <div className="h-2 w-16 bg-slate-600 rounded animate-pulse delay-75"></div>
+                            <div className="h-2 w-24 bg-slate-600 rounded animate-pulse delay-150"></div>
+                        </div>
+                        <Icon icon="Cpu" className="text-indigo-400 animate-spin-slow" />
+                    </div>
+                    <div className="flex gap-2">
+                        <div className="flex-1 bg-indigo-900/30 border border-indigo-500/30 rounded p-2">
+                            <div className="text-[10px] text-indigo-300 font-code mb-1">Group A</div>
+                            <div className="flex flex-wrap gap-1">
+                                <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center text-[8px] text-white">A</div>
+                                <div className="w-6 h-6 rounded-full bg-indigo-500 flex items-center justify-center text-[8px] text-white">B</div>
+                            </div>
+                        </div>
+                        <div className="flex-1 bg-purple-900/30 border border-purple-500/30 rounded p-2">
+                            <div className="text-[10px] text-purple-300 font-code mb-1">Group B</div>
+                            <div className="flex flex-wrap gap-1">
+                                <div className="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-[8px] text-white">C</div>
+                                <div className="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-[8px] text-white">D</div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Arrow Animation */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="bg-white text-slate-900 text-[10px] font-bold px-2 py-1 rounded shadow-lg font-code">Sorting...</div>
+                    </div>
+                </div>
+            );
+        };
+
+        // 10. OCR Scanner Visual for Week 2
+        const OCRScannerVisual = () => {
+            return (
+                <div className="w-full bg-slate-800 rounded-lg p-0 mb-4 border border-slate-700 relative overflow-hidden h-32 group">
+                    {/* Fake Camera View */}
+                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvc3ZnPg==')] opacity-20"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-2/3 h-2/3 border-2 border-green-400/50 rounded-lg flex items-center justify-center relative">
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-green-400"></div>
+                            <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-green-400"></div>
+                            <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-green-400"></div>
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-green-400"></div>
+                            
+                            {/* Scan Line */}
+                            <div className="w-full h-0.5 bg-green-400 absolute top-0 animate-[scan_2s_linear_infinite]"></div>
+                            
+                            <div className="text-[10px] text-green-400 font-code bg-slate-900/80 px-2 py-1 rounded">
+                                Ingredients Detected
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Portfolio = () => {
+            const [activeTab, setActiveTab] = useState('position');
+            const [scrolled, setScrolled] = useState(false);
+            const [showStoryModal, setShowStoryModal] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 20);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const NavButton = ({ id, label, icon }) => (
+                <button
+                    onClick={() => setActiveTab(id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 font-code ${
+                        activeTab === id
+                        ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.5)] scale-105'
+                        : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                    }`}
+                >
+                    <Icon icon={icon} size={16} />
+                    {label}
+                </button>
+            );
+
+            // --- SECTIONS ---
+
+            const AboutSection = () => (
+                <div className="space-y-8 fade-in">
+                    {/* Bio Card */}
+                    <div className="glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden border border-indigo-500/20">
+                        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+                            <Icon icon="User" size={300} />
+                        </div>
+                        <div className="relative z-10 max-w-3xl">
+                            <span className="badge badge-purple mb-4">Professional Profile</span>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight font-code">
+                                Educational Leader & <br />
+                                <span className="gradient-text">Technological Innovator</span>
+                            </h2>
+                            {/* ADDED IMAGE HERE */}
+                            <div className="mb-6 flex justify-center md:justify-start">
+                                <img 
+                                    src="https://github.com/mafe504/vcpf/blob/main/images/1.jpg?raw=true" 
+                                    alt="Musa Abu Hadeed" 
+                                    className="w-32 h-32 rounded-full border-4 border-indigo-500/50 shadow-lg object-cover"
+                                />
+                            </div>
+                            <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+                                Driven by a passion for education and a proven track record as an effective teacher, I transitioned into school leadership, bringing four years of experience as a <strong>School Principal</strong>.
+                            </p>
+                            <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+                                With a unique background spanning 10 years in IT (including 5 as an IT Officer) and a Master's in Renewable Energy, I leverage a blend of pedagogical understanding and technological innovation to foster forward-thinking educational settings.
+                            </p>
+                            
+                            <div className="flex flex-wrap gap-3 mt-6">
+                                <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm font-medium border border-slate-700 font-code">Educational Leadership</span>
+                                <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm font-medium border border-slate-700 font-code">Technology Integration</span>
+                                <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm font-medium border border-slate-700 font-code">Strategic Planning</span>
+                                <span className="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm font-medium border border-slate-700 font-code">Systems Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {/* Experience */}
+                        <div className="glass-panel p-8 rounded-3xl hover:border-blue-500/30 transition-all duration-300">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 bg-blue-900/30 rounded-lg text-blue-400 border border-blue-500/30"><Icon icon="Briefcase" size={24} /></div>
+                                <h3 className="text-xl font-bold text-white font-code">Experience</h3>
+                            </div>
+                            
+                            <div className="space-y-6 relative pl-4 border-l-2 border-slate-700">
+                                <div className="relative">
+                                    <div className="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-blue-500 border-2 border-slate-900 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                                    <h4 className="font-bold text-white">School Principal</h4>
+                                    <p className="text-sm text-slate-400 mb-1 font-code">Bab Al Silslah Basic Boys School • 2021 - 2025</p>
+                                    <p className="text-sm text-slate-400">Built common vision for school improvement, oversaw operations, and led staff development to promote student success.</p>
+                                </div>
+                                <div className="relative">
+                                    <div className="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-slate-600 border-2 border-slate-900"></div>
+                                    <h4 className="font-bold text-white">IT Officer</h4>
+                                    <p className="text-sm text-slate-400 mb-1 font-code">Madrasati Initiative • 2014 - 2020</p>
+                                    <p className="text-sm text-slate-400">Managed multimillion-dollar projects, oversaw infrastructure, and aligned technology solutions with business goals.</p>
+                                </div>
+                                <div className="relative">
+                                    <div className="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-slate-600 border-2 border-slate-900"></div>
+                                    <h4 className="font-bold text-white">Programmer & IT Teacher</h4>
+                                    <p className="text-sm text-slate-400 mb-1 font-code">Jerusalem Directorate Of Education • 2012 - 2021</p>
+                                    <p className="text-sm text-slate-400">Developed internal business solutions, managed databases, and designed user-friendly IT curriculums.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Education */}
+                        <div className="glass-panel p-8 rounded-3xl hover:border-purple-500/30 transition-all duration-300">
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 bg-purple-900/30 rounded-lg text-purple-400 border border-purple-500/30"><Icon icon="GraduationCap" size={24} /></div>
+                                <h3 className="text-xl font-bold text-white font-code">Education</h3>
+                            </div>
+                            
+                            <div className="space-y-6">
+                                <div>
+                                    <h4 className="font-bold text-white">Master's in Education Leadership</h4>
+                                    <p className="text-sm text-slate-400 font-code">Harvard University • 2025 - 2026</p>
+                                    <p className="text-xs text-slate-500">Organizations and Entrepreneurship</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-white">Master's in Renewable Energy</h4>
+                                    <p className="text-sm text-slate-400 font-code">Polytechnic University & Al Quds University • 2017 - 2021</p>
+                                    <p className="text-xs text-slate-500">Sustainability focus</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-white">High Diploma in Education</h4>
+                                    <p className="text-sm text-slate-400 font-code">Bethlehem University • 2013 - 2015</p>
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-white">Bachelor's in Information Technology</h4>
+                                    <p className="text-sm text-slate-400 font-code">AL- Ahliya University • 2007 - 2012</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const PositionSection = () => (
+                <div className="space-y-8 fade-in">
+                    <div className="glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden border border-indigo-500/20">
+                        <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+                            <Icon icon="Cpu" size={300} />
+                        </div>
+                        
+                        <div className="relative z-10 max-w-2xl">
+                            <span className="badge badge-blue mb-4">The Core Argument</span>
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight font-code">
+                                The Director & <br />
+                                <TypewriterText />
+                            </h2>
+                            
+                            <p className="text-lg text-slate-300 mb-6 leading-relaxed mt-4">
+                                <strong>How should we approach creative collaboration with AI?</strong>
+                            </p>
+                            <p className="text-lg text-slate-300 mb-6 leading-relaxed">
+                                My answer is simple: <strong>We must lead with vision.</strong> AI is a powerful "Force Multiplier" that can execute complex tasks (coding, sorting, logic) at incredible speeds, but it lacks the "Soul" to know <em>why</em> it's building.
+                            </p>
+                            <p className="text-lg text-white font-medium mb-8 leading-relaxed border-l-4 border-indigo-500 pl-4 bg-indigo-900/20 p-4 rounded-r-lg">
+                                "I am the Director. I set the scene, the mood, and the goal. AI is my skilled Architect—tirelessly drafting the blueprints and laying the bricks. Together, we build what neither could alone."
+                            </p>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700 hover:border-indigo-500/50 transition-colors">
+                                    <div className="flex items-center gap-2 mb-2 text-indigo-400 font-bold font-code">
+                                        <Icon icon="Sparkles" size={18} /> Force Multiplier
+                                    </div>
+                                    <p className="text-sm text-slate-400">
+                                        In Week 5 (Kirby), AI handled the physics so I could focus on fun. In Week 4 (Weather), it cleaned the data so I could find the story. It amplifies my capacity to create.
+                                    </p>
+                                </div>
+                                <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700 hover:border-rose-500/50 transition-colors">
+                                    <div className="flex items-center gap-2 mb-2 text-rose-400 font-bold font-code">
+                                        <Icon icon="ShieldAlert" size={18} /> Material Cost
+                                    </div>
+                                    <p className="text-sm text-slate-400">
+                                        However, we must not be blind. As Crawford warns, this "magic" has real environmental costs. And as the "Aesthetic Flywheel" suggests, relying on it too much risks creating a boring, average culture.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const EvidenceMaking = () => (
+                <div className="space-y-12 fade-in">
+                    <div className="text-center max-w-2xl mx-auto mb-8 text-white">
+                        <h2 className="text-3xl font-bold mb-4 font-code">Evidence From Making</h2>
+                        <p className="opacity-90 text-slate-300">A six-week journey from "Storytelling" to "Full-Stack Development".</p>
+                    </div>
+
+                    {/* Week 1: Storytelling */}
+                    <div className="glass-panel p-8 rounded-3xl relative border border-amber-500/20 card-hover">
+                        <span className="badge badge-amber mb-4">Week 1: Storytelling</span>
+                        <h3 className="text-2xl font-bold text-white mb-2 font-code">The Compass and the Garden</h3>
+                        <p className="text-slate-300 mb-6">My first experiment using Replit and Google AI Studio to create an interactive story.</p>
+                        
+                        {/* Embedded Digital Story Component */}
+                        <div className="mb-6">
+                            <DigitalStory />
+                        </div>
+
+                        <div className="bg-amber-900/20 p-4 rounded-xl border border-amber-500/30 mb-4">
+                            <p className="italic text-amber-200 text-sm">"It felt like I was a professional coder, just by writing what I wanted in a prompt."</p>
+                        </div>
+                         <div className="flex justify-between items-center">
+                            <div className="text-sm text-slate-400 flex gap-2">
+                                <span className="bg-slate-800 px-2 py-1 rounded border border-slate-700 font-code">Storytelling</span>
+                                <span className="bg-slate-800 px-2 py-1 rounded border border-slate-700 font-code">Replit</span>
+                            </div>
+                            <button 
+                                onClick={() => setShowStoryModal(true)}
+                                className="link-button cursor-pointer"
+                            >
+                                Read Full Story <Icon icon="BookOpen" size={16} />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Week 2: Automation */}
+                    <div className="glass-panel p-8 rounded-3xl border border-blue-500/20 card-hover">
+                        <span className="badge badge-blue mb-4">Week 2: Automation</span>
+                        <h3 className="text-2xl font-bold text-white mb-4 font-code">Life Hacks & Tools</h3>
+                        <div className="grid md:grid-cols-3 gap-6">
+                            <div className="bg-slate-800/50 p-4 rounded-xl flex flex-col justify-between border border-slate-700">
+                                <div>
+                                    <h4 className="font-bold text-white mb-2 font-code">Morning Routine</h4>
+                                    <p className="text-sm text-slate-400 mb-4">Power Automate flow to condense emails, calendar, and weather into one morning summary.</p>
+                                    <LogicFlow />
+                                </div>
+                            </div>
+                            <div className="bg-slate-800/50 p-4 rounded-xl flex flex-col justify-between border border-slate-700">
+                                <div>
+                                    <h4 className="font-bold text-white mb-2 font-code">Student Sorter</h4>
+                                    {/* Added Visual */}
+                                    <StudentSorterVisual />
+                                    <p className="text-sm text-slate-400">A VS Code & GitHub tool to sort students into balanced groups automatically.</p>
+                                </div>
+                                <a href="https://mafe504.github.io/vibe/" target="_blank" className="link-button">
+                                    Try Tool <Icon icon="ExternalLink" size={16} />
+                                </a>
+                            </div>
+                            <div className="bg-slate-800/50 p-4 rounded-xl flex flex-col justify-between border border-slate-700">
+                                <div>
+                                    <h4 className="font-bold text-white mb-2 font-code">OCR Scanner</h4>
+                                    {/* Added Visual */}
+                                    <OCRScannerVisual />
+                                    <p className="text-sm text-slate-400">Scanning ingredient labels to check for allergens using AI vision.</p>
+                                </div>
+                                <a href="https://mafe504.github.io/lifehack/" target="_blank" className="link-button">
+                                    Try Tool <Icon icon="ExternalLink" size={16} />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Week 3: Figma Games */}
+                    <div className="glass-panel p-8 rounded-3xl border border-purple-500/20 card-hover">
+                        <span className="badge badge-purple mb-4">Week 3: Figma & Logic</span>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {/* Column 1: Mario */}
+                            <div className="flex flex-col h-full">
+                                <MarioVisual />
+                                <div className="flex-grow">
+                                    <h3 className="text-xl font-bold text-white mb-2 font-code">Mario-Style Platformer</h3>
+                                    <p className="text-slate-300 text-sm mb-4">Built from scratch using Figma Make. I learned to "direct" the logic via prompts.</p>
+                                </div>
+                                <a href="https://nap-caper-67688814.figma.site" target="_blank" className="link-button mt-auto">
+                                    Play Game <Icon icon="ExternalLink" size={16} />
+                                </a>
+                            </div>
+
+                            {/* Column 2: Clock */}
+                             <div className="flex flex-col h-full">
+                                <ClockVisual />
+                                <div className="flex-grow">
+                                    <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2 font-code">Remixed Clock</h3>
+                                    <p className="text-slate-300 text-sm mb-4">Took a community file and added Video Backgrounds and YouTube Music integration.</p>
+                                </div>
+                                <a href="https://sphere-droop-72237368.figma.site" target="_blank" className="link-button mt-auto">
+                                    View Prototype <Icon icon="ExternalLink" size={16} />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Week 4: Weather Data */}
+                    <div className="glass-panel p-1 rounded-3xl card-hover border border-indigo-500/20">
+                        <div className="flex flex-col md:flex-row h-full">
+                            <div className="bg-gradient-to-br from-indigo-900 to-blue-900 p-8 md:p-12 md:w-2/5 rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none flex flex-col justify-center text-white relative">
+                                <span className="text-xs font-bold tracking-widest uppercase opacity-70 mb-2 font-code">Week 4</span>
+                                <h3 className="text-3xl font-bold mb-4 font-code">Weather Data Analysis</h3>
+                                <Icon icon="Code" size={100} className="absolute -bottom-5 -right-5 opacity-20" />
+                            </div>
+                            <div className="p-8 md:p-12 md:w-3/5 bg-slate-800/50 rounded-b-3xl md:rounded-r-3xl md:rounded-bl-none flex flex-col">
+                                <h4 className="font-bold text-white mb-2 font-code">The Correlation Visualization</h4>
+                                <p className="text-slate-300 mb-4 text-sm">Below is a generated representation of the data trend I discovered: higher temperatures correlate with higher PM2.5 levels.</p>
+                                
+                                <div className="mb-4 shadow-inner">
+                                    <ScatterPlot />
+                                </div>
+                                
+                                {/* New Bar Graph Component */}
+                                <div className="mb-4">
+                                    <h5 className="font-bold text-white mb-2 font-code text-xs">Weekly Average PM2.5 Levels</h5>
+                                    <BarGraph />
+                                </div>
+
+                                <h4 className="font-bold text-white mb-2 font-code">The Insight</h4>
+                                <div className="bg-indigo-900/30 p-3 rounded-lg border border-indigo-500/30 mb-4">
+                                    <p className="text-xs text-indigo-200 italic">"The AI didn't have the big idea... I realized I had to be the Product Manager to make this useful for everyone."</p>
+                                </div>
+                                 <a href="https://mafe504.github.io/weatherdata/analysis/" target="_blank" className="link-button mt-auto">
+                                    View Full Analysis <Icon icon="ExternalLink" size={16} />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Week 5: Kirby Game */}
+                    <div className="glass-panel p-1 rounded-3xl card-hover border border-pink-500/20">
+                        <div className="flex flex-col md:flex-row h-full">
+                            <div className="bg-gradient-to-br from-pink-900 to-rose-900 p-8 md:p-12 md:w-2/5 rounded-t-3xl md:rounded-l-3xl md:rounded-tr-none flex flex-col justify-center text-white relative">
+                                <span className="text-xs font-bold tracking-widest uppercase opacity-70 mb-2 font-code">Week 5</span>
+                                <h3 className="text-3xl font-bold mb-4 font-code">Kirby Game Dev</h3>
+                                <Icon icon="Zap" size={100} className="absolute -bottom-5 -right-5 opacity-20" />
+                            </div>
+                            <div className="p-8 md:p-12 md:w-3/5 bg-slate-800/50 rounded-b-3xl md:rounded-r-3xl md:rounded-bl-none flex flex-col">
+                                <h4 className="font-bold text-white mb-2 font-code">Playable Demo</h4>
+                                
+                                {/* Replaced PixelGame with PlayableKirbyGame */}
+                                <div className="mb-4">
+                                    <PlayableKirbyGame />
+                                </div>
+
+                                <h4 className="font-bold text-white mb-2 font-code">Force Multiplier</h4>
+                                <p className="text-slate-300 mb-4">Created a game mechanic where players steal powers (Fire + Bomb = Big Bang). AI handled the physics, freeing me to focus on game design.</p>
+                                <div className="bg-rose-900/30 p-3 rounded-lg border border-rose-500/30">
+                                    <p className="text-xs text-rose-200 italic">"The AI acts like a helpful planner—I provide the imagination, and the AI provides the structure."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Week 6: Teacher PD Platform */}
+                    <div className="glass-panel p-8 rounded-3xl border-t-4 border-green-500 card-hover">
+                        <span className="badge badge-green mb-4">Week 6: The Final Build</span>
+                        <h3 className="text-2xl font-bold text-white mb-4 font-code">Teacher PD Dashboard</h3>
+                        
+                        {/* Added Dashboard Visual */}
+                        <DashboardVisual />
+
+                        <p className="text-slate-300 leading-relaxed mb-6">
+                            My "Magic Idea" brought to life. A dedicated platform for Teacher Professional Development.
+                            I combined Figma for the UI design and a Database for the backend logic to track certifications and progress.
+                        </p>
+                        <div className="flex gap-4 mb-6">
+                             <div className="flex-1 bg-green-900/20 p-4 rounded-xl border border-green-500/30">
+                                <h5 className="font-bold text-green-300 text-sm mb-1 font-code">Challenge</h5>
+                                <p className="text-xs text-green-200">Linking specific teachers to specific training modules in a database.</p>
+                             </div>
+                             <div className="flex-1 bg-green-900/20 p-4 rounded-xl border border-green-500/30">
+                                <h5 className="font-bold text-green-300 text-sm mb-1 font-code">Success</h5>
+                                <p className="text-xs text-green-200">Describing a "tracking system" in plain English and having AI generate the schema.</p>
+                             </div>
+                        </div>
+
+                        {/* Added Link */}
+                        <a href="https://churn-armor-72368553.figma.site" target="_blank" className="link-button">
+                            View Prototype <Icon icon="ExternalLink" size={16} />
+                        </a>
+                    </div>
+                </div>
+            );
+
+            const EvidenceReadings = () => (
+                <div className="space-y-8 fade-in">
+                    <div className="text-center max-w-2xl mx-auto mb-12 text-white">
+                        <h2 className="text-3xl font-bold mb-4 font-code">Evidence From Readings</h2>
+                        <p className="opacity-90 text-slate-300">Tracing the intellectual journey week by week.</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        {/* Week 1 */}
+                        <div className="group relative overflow-hidden rounded-2xl bg-slate-800 p-8 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-1 border border-slate-700 hover:border-indigo-500/50">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 font-code">Week 1 • Materiality</span>
+                                <Icon icon="BookOpen" size={20} className="text-slate-500 group-hover:text-indigo-400 transition-colors" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-1 font-code">Atlas of AI</h3>
+                            <p className="text-sm font-medium text-slate-400 mb-6">Kate Crawford</p>
+                            
+                            <div className="mb-6 relative">
+                                <div className="absolute -top-3 -left-3 text-indigo-500/20"><Icon icon="Quote" size={32} /></div>
+                                <p className="relative z-10 text-slate-300 italic leading-relaxed">
+                                    "In contrast, in this book I argue that AI is neither artificial nor intelligent. Rather, artificial intelligence is both embodied and material, made from natural resources, fuel, human labor, infrastructures, logistics, histories, and classifications."
+                                </p>
+                            </div>
+                            
+                            <div className="bg-indigo-900/20 rounded-xl p-5 border border-indigo-500/20">
+                                <h4 className="text-xs font-bold text-indigo-300 uppercase mb-2 flex items-center gap-2 font-code">
+                                    <Icon icon="Sparkles" size={12} /> My Synthesis
+                                </h4>
+                                <p className="text-sm text-indigo-200 leading-relaxed">
+                                    This idea makes AI seem less magical and more like a regular industry that needs to be regulated. It connects AI to big problems like climate change and workers' rights.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Week 2 */}
+                        <div className="group relative overflow-hidden rounded-2xl bg-slate-800 p-8 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-1 border border-slate-700 hover:border-rose-500/50">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-rose-500"></div>
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-bold uppercase tracking-wider text-rose-400 font-code">Week 2 • Displacement</span>
+                                <Icon icon="BookOpen" size={20} className="text-slate-500 group-hover:text-rose-400 transition-colors" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-1 font-code">The Human Use of Human Beings</h3>
+                            <p className="text-sm font-medium text-slate-400 mb-6">Norbert Wiener</p>
+                            
+                            <div className="mb-6 relative">
+                                <div className="absolute -top-3 -left-3 text-rose-500/20"><Icon icon="Quote" size={32} /></div>
+                                <p className="relative z-10 text-slate-300 italic leading-relaxed">
+                                    "Let us remember that the automatic machine... is the precise economic equivalent of slave labor. Any labor which competes with slave labor must accept the economic conditions of slave labor."
+                                </p>
+                            </div>
+                            
+                            <div className="bg-rose-900/20 rounded-xl p-5 border border-rose-500/20">
+                                <h4 className="text-xs font-bold text-rose-300 uppercase mb-2 flex items-center gap-2 font-code">
+                                    <Icon icon="Sparkles" size={12} /> My Synthesis
+                                </h4>
+                                <p className="text-sm text-rose-200 leading-relaxed">
+                                    The writer was incredibly ahead of his time. He wasn't just talking about factory machines replacing muscle (the First Industrial Revolution) but machines replacing judgment. That sounds exactly like what we are dealing with nowadays!
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Week 3 */}
+                        <div className="group relative overflow-hidden rounded-2xl bg-slate-800 p-8 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-1 border border-slate-700 hover:border-purple-500/50">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-bold uppercase tracking-wider text-purple-400 font-code">Week 3 • Symbiosis</span>
+                                <Icon icon="BookOpen" size={20} className="text-slate-500 group-hover:text-purple-400 transition-colors" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-1 font-code">Man-Computer Symbiosis</h3>
+                            <p className="text-sm font-medium text-slate-400 mb-6">J.C.R. Licklider</p>
+                            
+                            <div className="mb-6 relative">
+                                <div className="absolute -top-3 -left-3 text-purple-500/20"><Icon icon="Quote" size={32} /></div>
+                                <p className="relative z-10 text-slate-300 italic leading-relaxed">
+                                    "In the anticipated symbiotic partnership, men will set the goals, formulate the hypotheses, determine the criteria, and perform the evaluations. Computing machines will do the routinizable work..."
+                                </p>
+                            </div>
+                            
+                            <div className="bg-purple-900/20 rounded-xl p-5 border border-purple-500/20">
+                                <h4 className="text-xs font-bold text-purple-300 uppercase mb-2 flex items-center gap-2 font-code">
+                                    <Icon icon="Sparkles" size={12} /> My Synthesis
+                                </h4>
+                                <p className="text-sm text-purple-200 leading-relaxed">
+                                    Licklider saw the computer as a perfect, high-speed assistant. But Hayles sees it as a "partner" that has its own kind of "cognitive abilities". This makes me think about how we design technology today. Do we design it to be an assistant, or a partner?
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Week 4 */}
+                        <div className="group relative overflow-hidden rounded-2xl bg-slate-800 p-8 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-1 border border-slate-700 hover:border-sky-500/50">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-sky-500"></div>
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-bold uppercase tracking-wider text-sky-400 font-code">Week 4 • Limits</span>
+                                <Icon icon="BookOpen" size={20} className="text-slate-500 group-hover:text-sky-400 transition-colors" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-1 font-code">Limits of Understanding</h3>
+                            <p className="text-sm font-medium text-slate-400 mb-6">Joseph Weizenbaum</p>
+                            
+                            <div className="mb-6 relative">
+                                <div className="absolute -top-3 -left-3 text-sky-500/20"><Icon icon="Quote" size={32} /></div>
+                                <p className="relative z-10 text-slate-300 italic leading-relaxed">
+                                    "Since, in the last analysis, each of our lives is unique, there is a limit to what we can bring another person to understand. There can be no total understanding..."
+                                </p>
+                            </div>
+                            
+                            <div className="bg-sky-900/20 rounded-xl p-5 border border-sky-500/20">
+                                <h4 className="text-xs font-bold text-sky-300 uppercase mb-2 flex items-center gap-2 font-code">
+                                    <Icon icon="Sparkles" size={12} /> My Synthesis
+                                </h4>
+                                <p className="text-sm text-sky-200 leading-relaxed">
+                                    My first thought is that this passage makes Weizenbaum's argument less scary. He's not just saying "AI is fake." He's saying that all understanding, even ours, has limits. This makes me think he wanted to design AI for a specific purpose, not to copy a human.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Week 5 */}
+                        <div className="group relative overflow-hidden rounded-2xl bg-slate-800 p-8 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-1 border border-slate-700 hover:border-amber-500/50">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-amber-500"></div>
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-bold uppercase tracking-wider text-amber-400 font-code">Week 5 • Data Ethics</span>
+                                <Icon icon="BookOpen" size={20} className="text-slate-500 group-hover:text-amber-400 transition-colors" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-1 font-code">Data as Colonization</h3>
+                            <p className="text-sm font-medium text-slate-400 mb-6">Keoni Mahelona</p>
+                            
+                            <div className="mb-6 relative">
+                                <div className="absolute -top-3 -left-3 text-amber-500/20"><Icon icon="Quote" size={32} /></div>
+                                <p className="relative z-10 text-slate-300 italic leading-relaxed">
+                                    "Data is the last frontier of colonization... AI is just a land grab all over again. Big Tech likes to collect your data more or less for free... and then turn it around and sell it back to you as a service."
+                                </p>
+                            </div>
+                            
+                            <div className="bg-amber-900/20 rounded-xl p-5 border border-amber-500/20">
+                                <h4 className="text-xs font-bold text-amber-300 uppercase mb-2 flex items-center gap-2 font-code">
+                                    <Icon icon="Sparkles" size={12} /> My Synthesis
+                                </h4>
+                                <p className="text-sm text-amber-200 leading-relaxed">
+                                    It makes me think the relationship we have with tech companies isn't really "free." It's an exchange where they are getting something extremely valuable from us, maybe without us even realizing it.
+                                </p>
+                            </div>
+                        </div>
+
+                         {/* Week 6 */}
+                         <div className="group relative overflow-hidden rounded-2xl bg-slate-800 p-8 shadow-lg transition-all hover:shadow-2xl hover:-translate-y-1 border border-slate-700 hover:border-emerald-500/50">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+                            <div className="mb-4 flex items-center justify-between">
+                                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 font-code">Week 6 • Culture</span>
+                                <Icon icon="BookOpen" size={20} className="text-slate-500 group-hover:text-emerald-400 transition-colors" />
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-1 font-code">The Aesthetic Flywheel</h3>
+                            <p className="text-sm font-medium text-slate-400 mb-6">Generative AI Culture</p>
+                            
+                            <div className="mb-6 relative">
+                                <div className="absolute -top-3 -left-3 text-emerald-500/20"><Icon icon="Quote" size={32} /></div>
+                                <p className="relative z-10 text-slate-300 italic leading-relaxed">
+                                    "AI-generated content may also feed future generative models, creating a self-referential aesthetic flywheel that could perpetuate AI-driven cultural norms."
+                                </p>
+                            </div>
+                            
+                            <div className="bg-emerald-900/20 rounded-xl p-5 border border-emerald-500/20">
+                                <h4 className="text-xs font-bold text-emerald-300 uppercase mb-2 flex items-center gap-2 font-code">
+                                    <Icon icon="Sparkles" size={12} /> My Synthesis
+                                </h4>
+                                <p className="text-sm text-emerald-200 leading-relaxed">
+                                    This sounds like an "echo chamber" for art. Social media narrows our view of the world, and AI might narrow what art looks like by only making "average" images.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen pb-20 text-white">
+                    <div className="magic-bg"></div> 
+                    <CodeRain /> {/* Added Code Rain Effect */}
+                    <ParticleField /> {/* Added Particle Field Effect */}
+                    
+                    {/* Navigation Bar */}
+                    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-nav py-3' : 'bg-transparent py-6'}`}>
+                        <div className="max-w-5xl mx-auto px-6 flex justify-between items-center">
+                            <div className={`font-bold text-xl tracking-tight transition-colors font-code ${scrolled ? 'text-white' : 'text-white'}`}>
+                                Musa Abu Hadeed <span className="text-indigo-400 animate-pulse">_</span>
+                            </div>
+                            <div className={`hidden md:flex gap-2 p-1 rounded-full ${scrolled ? 'bg-slate-800/50' : 'bg-slate-800/30 backdrop-blur-md'}`}>
+                                <NavButton id="position" label="My Position" icon="Star" />
+                                <NavButton id="about" label="About Me" icon="User" />
+                                <NavButton id="making" label="Evidence: Making" icon="Code" />
+                                <NavButton id="readings" label="Evidence: Readings" icon="BookOpen" />
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Mobile Nav (Bottom) */}
+                    <div className="md:hidden fixed bottom-6 left-6 right-6 z-50 glass-panel p-2 rounded-full flex justify-between shadow-2xl">
+                         <button onClick={() => setActiveTab('position')} className={`p-3 rounded-full flex-1 flex justify-center ${activeTab === 'position' ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}><Icon icon="Star" /></button>
+                         <button onClick={() => setActiveTab('about')} className={`p-3 rounded-full flex-1 flex justify-center ${activeTab === 'about' ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}><Icon icon="User" /></button>
+                         <button onClick={() => setActiveTab('making')} className={`p-3 rounded-full flex-1 flex justify-center ${activeTab === 'making' ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}><Icon icon="Code" /></button>
+                         <button onClick={() => setActiveTab('readings')} className={`p-3 rounded-full flex-1 flex justify-center ${activeTab === 'readings' ? 'bg-indigo-600 text-white' : 'text-slate-400'}`}><Icon icon="BookOpen" /></button>
+                    </div>
+
+                    {/* Hero Header Area */}
+                    <header className="pt-32 pb-12 px-6">
+                        <div className="max-w-4xl mx-auto text-center text-white">
+                            <div className="inline-block px-4 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-sm font-medium mb-6 font-code animate-pulse">
+                                Vibe Coding • Fall 2025
+                            </div>
+                            <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-lg font-code typewriter">
+                                Position Portfolio
+                            </h1>
+                            <p className="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto font-light leading-relaxed mb-8 text-slate-300">
+                                An argument on creative collaboration with AI.
+                            </p>
+                            
+                            {/* Added Design Journal Link */}
+                            <div>
+                                <a 
+                                    href="https://docs.google.com/presentation/d/1cr8_pZCMzoFKjYqSA970IuJIPWqUgtwD1G-eXOC6ETs/edit?usp=sharing" 
+                                    target="_blank" 
+                                    className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-full font-bold text-sm hover:bg-indigo-500 transition-all shadow-[0_0_20px_rgba(79,70,229,0.5)] hover:scale-105 hover:shadow-[0_0_30px_rgba(79,70,229,0.8)] font-code"
+                                >
+                                    <Icon icon="BookOpen" size={20} />
+                                    Read My Design Journal
+                                </a>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Main Content */}
+                    <main className="max-w-5xl mx-auto px-6 py-8">
+                        {activeTab === 'position' && <PositionSection />}
+                        {activeTab === 'about' && <AboutSection />}
+                        {activeTab === 'making' && <EvidenceMaking />}
+                        {activeTab === 'readings' && <EvidenceReadings />}
+                    </main>
+
+                    {/* Footer */}
+                    <footer className="max-w-4xl mx-auto px-6 py-12 text-center text-slate-400 text-sm border-t border-white/10 mt-12">
+                        <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8">
+                            <span className="font-medium text-slate-300 font-code">Musa Abu Hadeed</span>
+                            <span className="hidden md:inline text-slate-600">•</span>
+                            <span>Education Leadership, Organizations, and Entrepreneurship</span>
+                            <span className="hidden md:inline text-slate-600">•</span>
+                            <span className="font-bold text-indigo-400 font-code">Vibe Coding EDU T564A</span>
+                        </div>
+                        <div className="mt-4 text-xs opacity-60">
+                            Harvard Graduate School of Education • <a href="mailto:mabuhadeed@gse.harvard.edu" className="hover:text-indigo-400 transition-colors">mabuhadeed@gse.harvard.edu</a>
+                        </div>
+                    </footer>
+
+                    {/* Story Modal */}
+                    {showStoryModal && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md animate-fade-in" onClick={() => setShowStoryModal(false)}>
+                            <div className="bg-slate-800 w-full max-w-2xl max-h-[80vh] overflow-y-auto rounded-2xl shadow-2xl p-8 md:p-12 relative border border-slate-700" onClick={e => e.stopPropagation()}>
+                                <button 
+                                    onClick={() => setShowStoryModal(false)}
+                                    className="absolute top-4 right-4 p-2 hover:bg-slate-700 rounded-full transition-colors text-slate-400"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                </button>
+                                
+                                <div className="prose prose-invert max-w-none">
+                                    <h2 className="text-3xl font-bold text-white mb-6 font-serif">The Compass and the Garden</h2>
+                                    
+                                    <p className="text-lg leading-relaxed text-slate-300 mb-6">
+                                        Elara felt like she was made of glass, and the noise of the city was about to shatter her. Every day was the same: screens, traffic, and the low hum of too many people in one place. She walked with her head down, just trying to get through it.
+                                    </p>
+                                    
+                                    <p className="text-lg leading-relaxed text-slate-300 mb-6">
+                                        One afternoon, instead of taking the bus, she cut through a narrow alley she'd never noticed before. Tucked into a crack in the brick wall was a small, wooden box. Inside was a compass, but it was strange. The needle wasn't metal; it looked like it was carved from a piece of glowing, blue-green sea glass. And it didn't point North. It spun slowly, then settled on a direction that pointed directly into another wall.
+                                    </p>
+                                    
+                                    <p className="text-lg leading-relaxed text-slate-300 mb-6">
+                                        She felt silly, but she held it up and started walking. She let the glowing needle guide her. It pulled her left down a street she never took, then right, past shops with dusty windows. With every turn, the city sounds seemed to get quieter. The rumbling trucks were replaced by the sound of the wind. The crowds thinned out.
+                                    </p>
+                                    
+                                    <p className="text-lg leading-relaxed text-slate-300 mb-6">
+                                        Finally, the compass needle stopped spinning. It pointed at a tall, ivy-covered wooden door that looked like it hadn't been opened in a hundred years. There was no handle, but when she gently pushed, it swung open without a sound.
+                                    </p>
+                                    
+                                    <p className="text-lg leading-relaxed text-slate-300 mb-6">
+                                        Inside wasn't a building. It was a small, hidden garden, squeezed between two tall apartment buildings. A single, enormous tree grew in the center, its branches creating a perfect canopy of shade. Little glowing mosses dotted the ground, and a tiny stream trickled over smooth stones. It was completely silent, except for the sound of her own breathing.
+                                    </p>
+                                    
+                                    <p className="text-lg leading-relaxed text-slate-300">
+                                        Elara sat down at the base of the tree. The compass in her hand gave one last, soft pulse of light and then went still. She finally felt like she was made of something solid again. She had found a place where she couldn't shatter.
+                                    </p>
+                                </div>
+                                
+                                <div className="mt-8 pt-8 border-t border-slate-700 text-center">
+                                    <button 
+                                        onClick={() => setShowStoryModal(false)}
+                                        className="px-6 py-2 bg-indigo-600 text-white rounded-full font-medium hover:bg-indigo-500 transition-colors font-code"
+                                    >
+                                        Close Story
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Portfolio />);
+    </script>
+</body>
+</html>
